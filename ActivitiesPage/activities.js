@@ -116,14 +116,14 @@ window.onload = function init() {
 
 }
 
+//enumerates currentActivities[] with the activities with the selected category
 function onCategoryChange() {
     //change activityDiv to visible status, and fill the options with the activities from that category
     const categoryList = document.getElementById("categoryList");
     let activityDiv = document.getElementById("activityDiv");
     let activityList = document.getElementById("activityList");
     let activityForm = document.getElementById("activityForm");
-    
-    const categoryLength = categories.length;
+    const currentIndex = categoryList.selectedIndex;
     const activityLength = activities.length;
 
     //If a user selects a different category, the form should be hidden again
@@ -137,19 +137,13 @@ function onCategoryChange() {
     else { //a valid category was selected; make activityDiv visible and enumerate the options for that category
         activityDiv.style = "visibility: visible";
         resetActivities(); //reset the activity list
-        let currentCategory;
-
+        
         //reset the working activities array because it's a new category
         currentActivities.length = 0;
 
         //find the current category
-        for (let i = 0; i < categoryLength; i++) {
-            if (categoryList.options[categoryList.selectedIndex].text == categories[i]) {
-                currentCategory = categories[i];
-                //if category is found, no need to search through the rest
-                break;
-            }
-        }
+        let currentCategory = categoryList.options[currentIndex].text;
+
         //iterate through activities
         for (let y = 0; y < activityLength; y++) {
             //if category matches, add it to the options
@@ -163,10 +157,10 @@ function onCategoryChange() {
 }
 
 function onActivityChange() {
-    const selectedActivity = document.getElementById("activityList");
+    const activityList = document.getElementById("activityList");
     let activityForm = document.getElementById("activityForm")
     //we keep in mind that the actual index is -1 of currActivityIndex because of the unselectedActivity option
-    let currActivityIndex = selectedActivity.selectedIndex;
+    let currActivityIndex = activityList.selectedIndex;
 
     if(currentActivities[currActivityIndex-1].price > 0){
         //if the activity has a price, the form becomes visible
@@ -177,7 +171,7 @@ function onActivityChange() {
         activityForm.style= "visibility:hidden";
     }
 
-    if (selectedActivity.options[currActivityIndex].value == "unselectedActivity") {
+    if (activityList.options[currActivityIndex].value == "unselectedActivity") {
         //reset all the fields below the activities dropdown
         activityForm.reset();
         document.getElementById("detailRow1").style = "visibility:hidden";
