@@ -33,10 +33,39 @@
             </div>
         </div>
     </nav>
+    <div class="container-fluid text-center">
+        <h1>Activities</h1>
+        <br>
+        <!--Select Category : "Adventures", "Arts & Crafts", "Museums", "Wine Tastings", "Other"-->
+        <div class="row">
+            <div class="col">
+                <label for="categoryList">Activity Type: </label>
+                <select name="categoryList" id="categoryList">
+                    <option value="unselectedCategory" selected>Select an option</option>
+                    <option value="adventureCategory">Adventures</option>
+                    <option value="arts&CraftsCategory">Arts & Crafts</option>
+                    <option value="museumCategory">Museums</option>
+                    <option value="wineTastingCategory">Wine Tastings</option>
+                    <option value="otherCategory">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Activities are hidden until a category is selected-->
+        <div class="row" style="visibility:hidden" id="activityDiv">
+            <div class="col">
+                <label for="activityList">Activities: </label>
+                <select name="activityList" id="activityList">
+            </div>
+        </div>
+        
+
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <script src="activities.js"></script>
 </body>
 
 </html>

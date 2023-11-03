@@ -101,3 +101,53 @@ let activities = [
     }
 ];
 
+window.onload = function init(){
+    const categoryList = document.getElementById("categoryList");
+    categoryList.onchange = onCategoryChange;
+
+}
+
+function onCategoryChange(){
+    //change activityDiv to visible status, and fill the options with the activities from that category
+    const categoryList = document.getElementById("categoryList");
+    let activityDiv = document.getElementById("activityDiv");
+    let activityList = document.getElementById("activityList");
+    const categoryNum = categories.length;
+    const activityNum = activities.length;
+
+    //if you select the top, clear all options and hide activityDiv (DEFAULT)
+    if(categoryList.value == "unselectedCategory"){ 
+        activityDiv.style = "visibility:hidden";
+        resetActivities(); //reset the activity list
+    }
+    else{ //a valid category was selected; make activityDiv visible and enumerate the options for that category
+        activityDiv.style = "visibility: visible";
+        resetActivities(); //reset the activity list
+        let currentCategory;
+
+        //find the current category
+        for(let i=0; i<categoryNum; i++){ 
+            if(categoryList.options[categoryList.selectedIndex].text == categories[i]){
+                currentCategory = categories[i];   
+                //if category is found, no need to search through the rest
+                break; 
+            }
+        }
+        //iterate through activities
+        for(let y=0; y < activityNum; y++){ 
+            //if category matches, add it to the options
+            if(currentCategory == activities[y].category){ 
+                let newOption = new Option(activities[y].name, activities[y].id)
+                activityList.appendChild(newOption);
+            }
+        }
+    }
+}
+
+//resets the activity list and adds an unselected activity option
+function resetActivities(){ 
+    let activityList = document.getElementById("activityList");
+
+    activityList.options.length = 0;
+    activityList.appendChild(new Option("Select an activity", "unselectedActivity"));
+}
