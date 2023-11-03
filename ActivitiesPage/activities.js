@@ -100,3 +100,4 @@ let activities = [
         price: 0.00 
     }
 ];
+
