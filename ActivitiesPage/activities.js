@@ -107,13 +107,10 @@ let currentActivities = [];
 window.onload = function init() {
     let activityList = document.getElementById("activityList");
     const categoryList = document.getElementById("categoryList");
-    let activityForm = document.getElementById("activityForm");
-    const resetBtn = document.getElementById("resetBtn");
-
+    const activityForm = document.getElementById("activityForm");
     categoryList.onchange = onCategoryChange;
     activityList.onchange = onActivityChange;
-    resetBtn.onclick = activityForm.reset();
-
+    activityForm.onsubmit = confirmOrder;
 }
 
 //enumerates currentActivities[] with the activities with the selected category
@@ -137,7 +134,7 @@ function onCategoryChange() {
     else { //a valid category was selected; make activityDiv visible and enumerate the options for that category
         activityDiv.style = "visibility: visible";
         resetActivities(); //reset the activity list
-        
+
         //reset the working activities array because it's a new category
         currentActivities.length = 0;
 
@@ -162,13 +159,13 @@ function onActivityChange() {
     //we keep in mind that the actual index is -1 of currActivityIndex because of the unselectedActivity option
     let currActivityIndex = activityList.selectedIndex;
 
-    if(currentActivities[currActivityIndex-1].price > 0){
+    if (currentActivities[currActivityIndex - 1].price > 0) {
         //if the activity has a price, the form becomes visible
-        activityForm.style= "visibility:visible";
+        activityForm.style = "visibility:visible";
     }
-    else{
+    else {
         //if the activity has no price, the activityForm can be hidden again since it has no use
-        activityForm.style= "visibility:hidden";
+        activityForm.style = "visibility:hidden";
     }
 
     if (activityList.options[currActivityIndex].value == "unselectedActivity") {
@@ -185,7 +182,7 @@ function onActivityChange() {
         document.getElementById("detailRow3").style = "visibility:visible";
 
         assignActivityInfo(currActivityIndex);
-        
+
 
     }
 }
@@ -193,11 +190,11 @@ function onActivityChange() {
 function assignActivityInfo(currActivityIndex) {
     //get p for all of the text that I need to replace with current activity details and assign proper text
     //current index -1 because we need to account for the empty option at the top (unselectedActivity)
-    document.getElementById("activityID").innerText = currentActivities[currActivityIndex-1].id;
-    document.getElementById("activityName").innerText = currentActivities[currActivityIndex-1].name;
-    document.getElementById("activityLocation").innerText = currentActivities[currActivityIndex-1].location;
-    document.getElementById("activityDescription").innerText = currentActivities[currActivityIndex-1].description;
-    document.getElementById("activityPrice").innerText = "$" + currentActivities[currActivityIndex-1].price.toFixed(2); //needs $
+    document.getElementById("activityID").innerText = currentActivities[currActivityIndex - 1].id;
+    document.getElementById("activityName").innerText = currentActivities[currActivityIndex - 1].name;
+    document.getElementById("activityLocation").innerText = currentActivities[currActivityIndex - 1].location;
+    document.getElementById("activityDescription").innerText = currentActivities[currActivityIndex - 1].description;
+    document.getElementById("activityPrice").innerText = "$" + currentActivities[currActivityIndex - 1].price.toFixed(2); //needs $
 
 }
 //resets the activity list and adds an unselected activity option
@@ -218,3 +215,20 @@ function resetActivities() {
 
 
 //NEEDS FORM VALIDATION NOW
+function confirmOrder(){
+    event.preventDefault();
+    let activityList = document.getElementById("activityList");
+    let currActivityIndex = activityList.selectedIndex - 1;
+
+    let confirmationText = document.getElementById("confirmMessage");
+    let numTickets = document.getElementById("numTicketText").value;
+    let cardNum = document.getElementById("cardNumText").value;
+    let emailAddress = document.getElementById("emailText").value;
+
+    let totalPrice = currentActivities[currActivityIndex].price * Number(numTickets);
+
+    confirmationText.innerText = "Your credit card ending in " + cardNum.substring(cardNum.length-4) + 
+    " has been charged $" + totalPrice + " for " + numTickets + " tickets to " + 
+    currentActivities[currActivityIndex].name + ". A confirmation email has been sent to " + emailAddress + ".";
+
+}

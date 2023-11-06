@@ -94,7 +94,7 @@
 
     <br>
     <div class="container-fluid text-center" style="width:75%" id="formContainer">
-        <form id="activityForm" style="visibility:hidden" onsubmit="return false">
+        <form id="activityForm" style="visibility:hidden" onsubmit="return confirmOrder;">
             <div class="row">
                 <div class="col-centered">
                     <label for="numTicketText" class="form-label">Number of Tickets Needed</label>
@@ -121,7 +121,7 @@
             </div>
             <br>
 
-            <input type="button" class="btn-secondary" id="resetBtn" value="Clear All">
+            <input type="reset" class="btn-secondary" id="resetBtn" value="Clear All">
             <input type="submit" class="btn btn-primary" id="submitBtn" value="Submit">
         </form>
     </div>
@@ -129,7 +129,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-
+                <p id="confirmMessage" class="text-center"></p>
             </div>
         </div>
     </div>
